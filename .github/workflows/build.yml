@@ -22,5 +22,8 @@ jobs:
 
       - uses: actions/upload-artifact@v4
         with:
-          name: firmware
-          path: .pio/build/**/firmware.bin
+          name: ft8-heltec-firmware
+          path: |
+            .pio/build/heltec-ft8-cat/firmware.bin
+            .pio/build/heltec-ft8-cat/bootloader.bin
+            .pio/build/heltec-ft8-cat/partitions.bin
