@@ -17,10 +17,16 @@ void setup() {
 
     BSP::begin();
 
+    printStartupMessage();
+    Serial.println("Before display begin");
+
     Display::begin();
+
+    Serial.println("After display begin");
+
     Display::showStartup();
 
-    printStartupMessage();
+    Serial.println("After display startup");
 }
 
 void loop() {
