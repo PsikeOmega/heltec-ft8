@@ -32,15 +32,10 @@ void showStartup() {
 
     Serial.println("Display: text");
 
-    display.setFont(ArialMT_Plain_16);
-    display.drawString(0, 0, "FT8-HELTEC");
-
-    display.setFont(ArialMT_Plain_10);
-    display.drawString(0, 24, "Heltec Vision Master E213");
-    display.drawString(0, 40, "ESP32-S3");
-    display.drawString(0, 56, "USB serial OK");
-    display.drawString(0, 72, "Display OK");
-    display.drawString(0, 96, "v0.0.1 bringup");
+    display.drawString(10, 20, "FT8-HELTEC");
+    display.drawString(10, 45, "Vision Master E213");
+    display.drawString(10, 65, "ESP32-S3 / USB OK");
+    display.drawString(10, 85, "Display OK");
 
     Serial.println("Display: draw");
     display.display();
