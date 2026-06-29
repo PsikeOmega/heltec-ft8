@@ -69,9 +69,15 @@ void showRadioStatus() {
     drawTitleBar("FT8-HELTEC");
 
     drawText(10, 40, "28.074.000 MHz");
-    drawText(10, 62, "10m USB");
-    drawText(10, 92, "CAT: WAITING");
-    drawText(10, 112, "PTT: RX");
+    drawHorizontalRule(58);
+
+    drawText(10, 68, "10m USB");
+    drawText(10, 88, "CAT: WAITING");
+    drawText(10, 108, "PTT: RX");
+
+    drawRect(160, 40, 75, 70);
+    drawText(172, 55, "RX");
+    drawText(170, 78, "READY");
 
     refresh();
 
@@ -79,8 +85,24 @@ void showRadioStatus() {
 }
 
 void drawTitleBar(const char* title) {
-    display.drawRect(0, 0, 250, 28);
-    display.drawString(10, 7, title);
+    drawRect(0, 0, 250, 28);
+    drawText(10, 7, title);
+}
+
+void drawLine(int x0, int y0, int x1, int y1) {
+    display.drawLine(x0, y0, x1, y1);
+}
+
+void drawRect(int x, int y, int w, int h) {
+    display.drawRect(x, y, w, h);
+}
+
+void fillRect(int x, int y, int w, int h) {
+    display.fillRect(x, y, w, h);
+}
+
+void drawHorizontalRule(int y) {
+    display.drawLine(0, y, 250, y);
 }
 
 }

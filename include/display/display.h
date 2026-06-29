@@ -17,4 +17,9 @@ void showRadioStatus();
 
 void drawTitleBar(const char* title);
 
+void drawLine(int x0, int y0, int x1, int y1);
+void drawRect(int x, int y, int w, int h);
+void fillRect(int x, int y, int w, int h);
+void drawHorizontalRule(int y);
+
 }
