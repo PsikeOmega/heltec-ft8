@@ -77,6 +77,10 @@ void showStartup() {
     Serial.println("Display: done");
 }
 
+void drawHorizontalRule(int y) {
+    display.drawLine(0, y, STATUS_BOX_X - 5, y);
+}
+
 void showRadioStatus() {
     Serial.println("Display: radio status");
 
@@ -86,7 +90,6 @@ void showRadioStatus() {
 
     drawText(10, 40, "28.074.000 MHz");
     drawHorizontalRule(58);
-
     drawText(10, 68, "10m USB");
     drawText(10, 88, "CAT: WAITING");
     drawText(10, 108, "PTT: RX");
@@ -115,10 +118,6 @@ void drawRect(int x, int y, int w, int h) {
 
 void fillRect(int x, int y, int w, int h) {
     display.fillRect(x, y, w, h);
-}
-
-void drawHorizontalRule(int y) {
-    display.drawLine(0, y, SCREEN_W, y);
 }
 
 }
