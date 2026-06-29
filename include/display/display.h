@@ -13,4 +13,6 @@ void drawStatusLine(const char* left, const char* right);
 
 void showStartup();
 
+void showRadioStatus();
+
 }

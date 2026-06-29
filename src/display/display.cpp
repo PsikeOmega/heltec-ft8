@@ -61,4 +61,22 @@ void showStartup() {
     Serial.println("Display: done");
 }
 
+void showRadioStatus() {
+    Serial.println("Display: radio status");
+
+    clear();
+
+    drawTitle("FT8-HELTEC");
+
+    drawText(10, 45, "28.074.000 MHz");
+    drawText(10, 65, "10m USB");
+
+    drawText(10, 90, "CAT: WAITING");
+    drawText(10, 110, "PTT: RX");
+
+    refresh();
+
+    Serial.println("Display: done");
+}
+
 }

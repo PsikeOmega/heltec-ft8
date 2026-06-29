@@ -24,7 +24,7 @@ void setup() {
 
     Serial.println("After display begin");
 
-    Display::showStartup();
+    Display::showRadioStatus();
 
     Serial.println("After display startup");
 }
