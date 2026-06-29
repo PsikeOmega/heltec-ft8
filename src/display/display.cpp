@@ -118,7 +118,7 @@ void fillRect(int x, int y, int w, int h) {
 }
 
 void drawHorizontalRule(int y) {
-    display.drawLine(0, y, 250, y);
+    display.drawLine(0, y, SCREEN_W, y);
 }
 
 }
