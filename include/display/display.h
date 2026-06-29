@@ -22,4 +22,7 @@ void drawRect(int x, int y, int w, int h);
 void fillRect(int x, int y, int w, int h);
 void drawHorizontalRule(int y);
 
+void drawLabelValue(int x, int y, const char* label, const char* value);
+void drawStatusBox(const char* top, const char* bottom);
+
 }

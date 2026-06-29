@@ -77,6 +77,18 @@ void showStartup() {
     Serial.println("Display: done");
 }
 
+void drawLabelValue(int x, int y, const char* label, const char* value) {
+    display.drawString(x, y, label);
+    display.drawString(x + 55, y, value);
+}
+
+void drawStatusBox(const char* top, const char* bottom) {
+    drawRect(STATUS_BOX_X, STATUS_BOX_Y, STATUS_BOX_W, STATUS_BOX_H);
+
+    drawText(STATUS_BOX_X + 22, STATUS_BOX_Y + 14, top);
+    drawText(STATUS_BOX_X + 14, STATUS_BOX_Y + 38, bottom);
+}
+
 void drawHorizontalRule(int y) {
     display.drawLine(0, y, STATUS_BOX_X - 5, y);
 }
@@ -90,13 +102,12 @@ void showRadioStatus() {
 
     drawText(10, 40, "28.074.000 MHz");
     drawHorizontalRule(58);
-    drawText(10, 68, "10m USB");
-    drawText(10, 88, "CAT: WAITING");
-    drawText(10, 108, "PTT: RX");
 
-    drawRect(STATUS_BOX_X, STATUS_BOX_Y, STATUS_BOX_W, STATUS_BOX_H);
-    drawText(172, 55, "RX");
-    drawText(170, 78, "READY");
+    drawLabelValue(10, 68, "BAND:", "10m");
+    drawLabelValue(10, 88, "CAT:", "WAITING");
+    drawLabelValue(10, 108, "PTT:", "RX");
+
+    drawStatusBox("RX", "READY");
 
     refresh();
 
