@@ -14,12 +14,9 @@ const char* displayName() {
 }
 
 void begin() {
-    // Board-specific hardware startup will live here.
-    // Later:
-    // - e-paper init
-    // - battery ADC init
-    // - PTT GPIO init
-    // - VFO I2C init
+    pinMode(36, OUTPUT);
+    digitalWrite(36, LOW);   // Heltec Vext ON is often active-low
+    delay(100);
 }
 
 void update() {
