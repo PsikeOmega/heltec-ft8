@@ -14,9 +14,7 @@ const char* displayName() {
 }
 
 void begin() {
-    pinMode(36, OUTPUT);
-    digitalWrite(36, LOW);   // Heltec Vext ON is often active-low
-    delay(100);
+    // Board-specific startup lives here later.
 }
 
 void update() {

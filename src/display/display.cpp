@@ -1,19 +1,32 @@
 #include "display/display.h"
 #include <Arduino.h>
-#include "HT_lCMEN2R13EFC1.h"
+#include "HT_E0213A367.h"
 
-HT_ICMEN2R13EFC1 display(6, 5, 4, 7, 3, 2, -1, 6000000);
+HT_E0213A367 display(3, 2, 5, 1, 4, 6, -1, 6000000);
+// rst, dc, cs, busy, sck, mosi, miso, frequency
 
 namespace Display {
 
 void begin() {
-    Serial.println("Display: official Heltec driver selected");
-}
+    Serial.println("Display: power");
 
-void showStartup() {
+    // Enable display power
+    pinMode(18, OUTPUT);
+    digitalWrite(18, HIGH);
+
+    // Enable ADC control
+    pinMode(46, OUTPUT);
+    digitalWrite(46, HIGH);
+
+    delay(100);
+
     Serial.println("Display: init");
     display.init();
 
+    Serial.println("Display: ready");
+}
+
+void showStartup() {
     Serial.println("Display: clear");
     display.clear();
 
