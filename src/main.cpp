@@ -1,5 +1,6 @@
 #include <Arduino.h>
 #include "bsp/vision_master_e213.h"
+#include "display/display.h"
 
 void printStartupMessage() {
     Serial.println();
@@ -15,6 +16,9 @@ void setup() {
     delay(1000);
 
     BSP::begin();
+
+    Display::begin();
+    Display::showStartup();
 
     printStartupMessage();
 }
