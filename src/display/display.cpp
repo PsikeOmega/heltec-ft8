@@ -37,6 +37,9 @@ void showStartup() {
     display.drawString(10, 65, "ESP32-S3 / USB OK");
     display.drawString(10, 85, "Display OK");
 
+    Serial.println("Display: update buffer");
+    display.update(COLOR_BUFFER);
+
     Serial.println("Display: draw");
     display.display();
 
