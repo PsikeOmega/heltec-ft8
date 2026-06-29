@@ -2,7 +2,7 @@
 #include <Arduino.h>
 #include <heltec-eink-modules.h>
 
-EInkDisplay_VisionMasterE213 display;
+EInkDisplay_VisionMasterE213V1_1 display;
 
 namespace Display {
 
