@@ -66,17 +66,21 @@ void showRadioStatus() {
 
     clear();
 
-    drawTitle("FT8-HELTEC");
+    drawTitleBar("FT8-HELTEC");
 
-    drawText(10, 45, "28.074.000 MHz");
-    drawText(10, 65, "10m USB");
-
-    drawText(10, 90, "CAT: WAITING");
-    drawText(10, 110, "PTT: RX");
+    drawText(10, 40, "28.074.000 MHz");
+    drawText(10, 62, "10m USB");
+    drawText(10, 92, "CAT: WAITING");
+    drawText(10, 112, "PTT: RX");
 
     refresh();
 
     Serial.println("Display: done");
+}
+
+void drawTitleBar(const char* title) {
+    display.drawRect(0, 0, 250, 28);
+    display.drawString(10, 7, title);
 }
 
 }

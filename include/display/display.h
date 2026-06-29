@@ -15,4 +15,6 @@ void showStartup();
 
 void showRadioStatus();
 
+void drawTitleBar(const char* title);
+
 }
