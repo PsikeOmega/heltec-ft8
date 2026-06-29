@@ -7,7 +7,9 @@ EInkDisplay_VisionMasterE213 display;
 namespace Display {
 
 void begin() {
-    display.begin();
+    // The heltec-eink-modules library initializes all-in-one Vision Master
+    // displays automatically. Calling display.begin() appears to hang here.
+
 }
 
 void showStartup() {
