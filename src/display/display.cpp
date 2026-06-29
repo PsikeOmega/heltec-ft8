@@ -10,11 +10,9 @@ namespace Display {
 void begin() {
     Serial.println("Display: power");
 
-    // Enable display power
     pinMode(18, OUTPUT);
     digitalWrite(18, HIGH);
 
-    // Enable ADC control
     pinMode(46, OUTPUT);
     digitalWrite(46, HIGH);
 
@@ -26,22 +24,39 @@ void begin() {
     Serial.println("Display: ready");
 }
 
-void showStartup() {
-    Serial.println("Display: clear");
+void clear() {
     display.clear();
+}
 
-    Serial.println("Display: text");
-
-    display.drawString(10, 20, "FT8-HELTEC");
-    display.drawString(10, 45, "Vision Master E213");
-    display.drawString(10, 65, "ESP32-S3 / USB OK");
-    display.drawString(10, 85, "Display OK");
-
-    Serial.println("Display: update buffer");
+void refresh() {
     display.update(COLOR_BUFFER);
-
-    Serial.println("Display: draw");
     display.display();
+}
+
+void drawText(int x, int y, const char* text) {
+    display.drawString(x, y, text);
+}
+
+void drawTitle(const char* text) {
+    display.drawString(10, 20, text);
+}
+
+void drawStatusLine(const char* left, const char* right) {
+    display.drawString(10, 105, left);
+    display.drawString(85, 105, right);
+}
+
+void showStartup() {
+    Serial.println("Display: startup screen");
+
+    clear();
+
+    drawTitle("FT8-HELTEC");
+    drawText(10, 45, "Vision Master E213");
+    drawText(10, 65, "ESP32-S3 / USB OK");
+    drawText(10, 85, "Display OK");
+
+    refresh();
 
     Serial.println("Display: done");
 }
