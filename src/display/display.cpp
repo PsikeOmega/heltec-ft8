@@ -1,41 +1,24 @@
 #include "display/display.h"
 #include <Arduino.h>
-#include <heltec-eink-modules.h>
+#include "HT_lCMEN2R13EFC1.h"
 
-EInkDisplay_VisionMasterE213 display;
+HT_ICMEN2R13EFC1 display(6, 5, 4, 7, 3, 2, -1, 6000000);
 
 namespace Display {
 
 void begin() {
-    // The heltec-eink-modules library initializes all-in-one Vision Master
-    // displays automatically. Calling display.begin() appears to hang here.
-
+    Serial.println("Display: official Heltec driver selected");
 }
 
 void showStartup() {
+    Serial.println("Display: init");
+    display.init();
+
     Serial.println("Display: clear");
     display.clear();
 
-    Serial.println("Display: text 1");
-    display.setCursor(0, 20);
-    display.setTextSize(2);
-    display.print("FT8-HELTEC");
-
-    Serial.println("Display: text 2");
-    display.setCursor(0, 50);
-    display.setTextSize(1);
-    display.print("Vision Master E213");
-
-    Serial.println("Display: text 3");
-    display.setCursor(0, 70);
-    display.print("USB serial OK");
-
-    Serial.println("Display: text 4");
-    display.setCursor(0, 90);
-    display.print("Firmware v0.0.1");
-
-    Serial.println("Display: update");
-    display.update();
+    Serial.println("Display: draw");
+    display.display();
 
     Serial.println("Display: done");
 }
