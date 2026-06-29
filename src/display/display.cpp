@@ -5,6 +5,22 @@
 HT_E0213A367 display(3, 2, 5, 1, 4, 6, -1, 6000000);
 // rst, dc, cs, busy, sck, mosi, miso, frequency
 
+namespace {
+constexpr int SCREEN_W = 250;
+constexpr int SCREEN_H = 122;
+
+constexpr int HEADER_X = 0;
+constexpr int HEADER_Y = 0;
+constexpr int HEADER_W = SCREEN_W;
+constexpr int HEADER_H = 28;
+
+constexpr int LEFT_X = 10;
+constexpr int STATUS_BOX_X = 160;
+constexpr int STATUS_BOX_Y = 40;
+constexpr int STATUS_BOX_W = 75;
+constexpr int STATUS_BOX_H = 70;
+}
+
 namespace Display {
 
 void begin() {
@@ -75,7 +91,7 @@ void showRadioStatus() {
     drawText(10, 88, "CAT: WAITING");
     drawText(10, 108, "PTT: RX");
 
-    drawRect(160, 40, 75, 70);
+    drawRect(STATUS_BOX_X, STATUS_BOX_Y, STATUS_BOX_W, STATUS_BOX_H);
     drawText(172, 55, "RX");
     drawText(170, 78, "READY");
 
@@ -85,8 +101,8 @@ void showRadioStatus() {
 }
 
 void drawTitleBar(const char* title) {
-    drawRect(0, 0, 250, 28);
-    drawText(10, 7, title);
+    drawRect(HEADER_X, HEADER_Y, HEADER_W, HEADER_H);
+    drawText(LEFT_X, 7, title);
 }
 
 void drawLine(int x0, int y0, int x1, int y1) {
