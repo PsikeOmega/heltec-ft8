@@ -31,8 +31,8 @@ static void handleCommand(const char* command) {
 
     if (strcmp(command, "FA") == 0 || strcmp(command, "fa") == 0) {
         char response[20];
-            snprintf(response, sizeof(response), "FA%011lu;", radio.frequency);
-            reply(response);
+        snprintf(response, sizeof(response), "FA%011lu;", radio.frequency);
+        reply(response);
     }
     else if ((command[0] == 'F' || command[0] == 'f') &&
              (command[1] == 'A' || command[1] == 'a')) {

@@ -32,4 +32,24 @@ void setCatConnected(bool connected) {
     radio.dirty = true;
 }
 
+//===============
+// frequency getter 
+//===============
+
+uint32_t getFrequency() {
+    return radio.frequency;
+}
+
+const char* getMode() {
+    return radio.mode;
+}
+
+bool getPTT() {
+    return radio.ptt;
+}
+
+bool isCatConnected() {
+    return radio.catConnected;
+}
+
 }
