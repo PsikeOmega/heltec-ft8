@@ -1,6 +1,7 @@
 #include "display/display.h"
 #include <Arduino.h>
 #include "HT_E0213A367.h"
+#include "radio/radio_state.h"
 
 HT_E0213A367 display(3, 2, 5, 1, 4, 6, -1, 6000000);
 // rst, dc, cs, busy, sck, mosi, miso, frequency
@@ -149,10 +150,11 @@ void showRadioStatus() {
     drawHorizontalRule(58);
 
     drawModeLine("USB / FT8");
-    drawCatStatus("WAITING");
-    drawPttStatus("RX");
+    drawCatStatus(radio.catConnected ? "ONLINE" : "WAITING");
+    drawPttStatus(radio.ptt ? "TX" : "RX");
 
-    drawStatusBox("RX", "READY");
+    drawStatusBox(radio.ptt ? "TX" : "RX",
+                  radio.catConnected ? "CAT OK" : "READY");
 
     refresh();
 

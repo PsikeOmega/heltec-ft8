@@ -1,6 +1,7 @@
 #include "display/display.h"
 #include <Arduino.h>
 #include "HT_E0213A367.h"
+#include "radio/radio_state.h"
 
 HT_E0213A367 display(3, 2, 5, 1, 4, 6, -1, 6000000);
 // rst, dc, cs, busy, sck, mosi, miso, frequency
@@ -101,6 +102,26 @@ void drawStatusBox(const char* top, const char* bottom) {
     drawText(STATUS_BOX_X + 14, STATUS_BOX_Y + 38, bottom);
 }
 
+void drawFrequency(const char* frequency) {
+    drawText(10, 40, frequency);
+}
+
+void drawModeLine(const char* mode) {
+    drawText(10, 68, mode);
+}
+
+void drawCatStatus(const char* status) {
+    drawLabelValue(10, 88, "CAT:", status);
+}
+
+void drawPttStatus(const char* status) {
+    drawLabelValue(10, 108, "PTT:", status);
+}
+
+void drawAudioStatus(const char* status) {
+    drawLabelValue(10, 68, "AUDIO:", status);
+}
+
 // screens
 
 void showStartup() {
@@ -125,12 +146,12 @@ void showRadioStatus() {
 
     drawTitleBar("FT8-HELTEC");
 
-    drawText(10, 40, "28.074.000 MHz");
+    drawFrequency("28.074.000 MHz");
     drawHorizontalRule(58);
 
-    drawLabelValue(10, 68, "BAND:", "10m");
-    drawLabelValue(10, 88, "CAT:", "WAITING");
-    drawLabelValue(10, 108, "PTT:", "RX");
+    drawModeLine("USB / FT8");
+    drawCatStatus("WAITING");
+    drawPttStatus("RX");
 
     drawStatusBox("RX", "READY");
 
