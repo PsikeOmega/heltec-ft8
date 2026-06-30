@@ -1,9 +1,9 @@
 #include "cat/cat.h"
-#include "radio/radio_state.h"
+#include "radio/radio.h"
+
 #include <Arduino.h>
 #include <string.h>
 #include <stdlib.h>
-#include "radio/radio.h"
 
 namespace CAT {
 
@@ -16,7 +16,7 @@ char buffer[CAT_BUFFER_SIZE];
 int index = 0;
 
 //====================
-// private helper functions
+// Private helper functions
 //====================
 
 static void reply(const char* text)
@@ -24,48 +24,112 @@ static void reply(const char* text)
     Serial.print(text);
 }
 
-static void handleCommand(const char* command) {
-    Serial.printf("CAT RX: %s\n", command);
+static bool isCommand(const char* command, const char* target)
+{
+    return strcmp(command, target) == 0;
+}
 
-    Radio::setCatConnected(true);
+static bool startsWith(const char* command, const char* prefix)
+{
+    return strncmp(command, prefix, strlen(prefix)) == 0;
+}
 
+//====================
+// FA - VFO A Frequency
+//====================
 
-//this is the response for a FA function
-    if (strcmp(command, "FA") == 0 || strcmp(command, "fa") == 0) {
+static void handleFA(const char* command)
+{
+    if (strlen(command) == 2) {
         char response[20];
-        snprintf(response, sizeof(response), "FA%011lu;", Radio::getFrequency());
-        reply(response);
-    }
-    else if ((command[0] == 'F' || command[0] == 'f') &&
-             (command[1] == 'A' || command[1] == 'a')) {
-        uint32_t newFreq = strtoul(command + 2, nullptr, 10);
+        snprintf(response, sizeof(response),
+                 "FA%011lu;",
+                 Radio::getFrequency());
 
-        if (newFreq > 0) {
-            Radio::setFrequency(newFreq);
-        }
+        reply(response);
+        return;
     }
-    
-    
-//this is the response for an MD function 
-    else if (strcmp(command, "MD") == 0 || strcmp(command, "md") == 0) {
+
+    uint32_t newFreq = strtoul(command + 2, nullptr, 10);
+
+    if (newFreq > 0) {
+        Radio::setFrequency(newFreq);
+    }
+}
+
+//====================
+// FB - VFO B Frequency
+// For now, mirror VFO A.
+//====================
+
+static void handleFB(const char* command)
+{
+    if (strlen(command) == 2) {
+        char response[20];
+        snprintf(response, sizeof(response),
+                 "FB%011lu;",
+                 Radio::getFrequency());
+
+        reply(response);
+        return;
+    }
+
+    uint32_t newFreq = strtoul(command + 2, nullptr, 10);
+
+    if (newFreq > 0) {
+        Radio::setFrequency(newFreq);
+    }
+}
+
+//====================
+// MD - Operating Mode
+//====================
+
+static void handleMD(const char* command)
+{
+    if (strlen(command) == 2) {
         reply("MD2;");
+        return;
     }
-    
-    
-//this is the response for a TX function 
-    else if (strcmp(command, "TX") == 0 || strcmp(command, "tx") == 0) {
-        Radio::setPTT(true);
+
+    if (isCommand(command, "MD1")) {
+        Radio::setMode("LSB");
     }
-    
-    
-//this is the return for an RX funtion
-    else if (strcmp(command, "RX") == 0 || strcmp(command, "rx") == 0) {
-        Radio::setPTT(false);
+    else if (isCommand(command, "MD2")) {
+        Radio::setMode("USB");
     }
-    
-    
-//this is the return for an IF function
-    else if (strcmp(command, "IF") == 0 || strcmp(command, "if") == 0) {
+    else if (isCommand(command, "MD3")) {
+        Radio::setMode("CW");
+    }
+    else if (isCommand(command, "MD4")) {
+        Radio::setMode("FM");
+    }
+}
+
+//====================
+// TX - Enter Transmit
+//====================
+
+static void handleTX()
+{
+    Radio::setPTT(true);
+}
+
+//====================
+// RX - Return to Receive
+//====================
+
+static void handleRX()
+{
+    Radio::setPTT(false);
+}
+
+//====================
+// IF - Transceiver Status
+//====================
+
+static void handleIF()
+{
     char response[40];
 
     snprintf(response, sizeof(response),
@@ -75,21 +139,72 @@ static void handleCommand(const char* command) {
 
     reply(response);
 }
-    
+
+//====================
+// ID - Radio ID
+//====================
+
+static void handleID()
+{
+    reply("ID020;");
 }
 
+//====================
+// OF - Offset
+//====================
+
+static void handleOF()
+{
+    reply("OF000000000;");
+}
+
+//====================
+// Command dispatcher
+//====================
+
+static void handleCommand(const char* command)
+{
+    Serial.printf("CAT RX: %s\n", command);
+
+    Radio::setCatConnected(true);
+
+    if (startsWith(command, "FA")) {
+        handleFA(command);
+    }
+    else if (startsWith(command, "FB")) {
+        handleFB(command);
+    }
+    else if (startsWith(command, "MD")) {
+        handleMD(command);
+    }
+    else if (isCommand(command, "TX")) {
+        handleTX();
+    }
+    else if (isCommand(command, "RX")) {
+        handleRX();
+    }
+    else if (isCommand(command, "IF")) {
+        handleIF();
+    }
+    else if (isCommand(command, "ID")) {
+        handleID();
+    }
+    else if (isCommand(command, "OF")) {
+        handleOF();
+    }
+}
 
 //===============
-// Public functions 
+// Public functions
 //===============
 
-
-void begin() {
+void begin()
+{
     Serial.println("CAT: initialized");
 }
 
-
-void update() {
+void update()
+{
     while (Serial.available() > 0) {
         char c = Serial.read();
 
@@ -97,9 +212,11 @@ void update() {
             buffer[index] = '\0';
             handleCommand(buffer);
             index = 0;
-        } else if (index < CAT_BUFFER_SIZE - 1) {
+        }
+        else if (index < CAT_BUFFER_SIZE - 1) {
             buffer[index++] = c;
-        } else {
+        }
+        else {
             index = 0;
         }
     }
