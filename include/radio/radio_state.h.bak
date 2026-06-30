@@ -12,6 +12,8 @@ struct RadioState {
     const char* mode = "USB";
 };
 
+bool dirty = true;
+
 extern RadioState radio;
 
 // Future expansion:

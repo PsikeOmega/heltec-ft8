@@ -2,18 +2,17 @@
 
 #include <stdint.h>
 
-struct RadioState {
-    uint32_t frequency = 28074000;
-    // Future: select among SI5351 outputs/band presets
-    uint8_t activeBand = 0;
-    bool catConnected = false;
-    bool ptt = false;
+    struct RadioState {
+        uint32_t frequency = 28074000;
+        uint8_t activeBand = 0;
 
-    const char* mode = "USB";
+        bool catConnected = false;
+        bool ptt = false;
+        bool dirty = true;
+
+        const char* mode = "USB";
 };
-
-bool dirty = true;
-
+// Future: select among SI5351 outputs/band presets
 extern RadioState radio;
 
 // Future expansion:
