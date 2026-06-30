@@ -16,5 +16,7 @@ extern RadioState radio;
 
 // Future expansion:
 // - Multiple band presets
-// - SI5351 output selection
+// - Multiple SI5351 outputs
 // - Relay-selected band-pass filters
+// - Multiple CAT profiles
+// - GPS-disciplined FT8 timing

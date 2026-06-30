@@ -18,17 +18,16 @@ void setup() {
     delay(1000);
 
     BSP::begin();
+    Display::begin();
+    Display::showRadioStatus();
     
+    Radio::begin();
     CAT::begin();
     
     printStartupMessage();
     Serial.println("Before display begin");
 
-    Display::begin();
-
     Serial.println("After display begin");
-
-    Display::showRadioStatus();
 
     Serial.println("After display startup");
 }
@@ -42,6 +41,7 @@ void loop() {
     delay(10);
 
     CAT::update();
+    Radio::update();
 
     // Other future modules
     // SI5351::update();

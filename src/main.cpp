@@ -42,6 +42,10 @@ void loop() {
 
     CAT::update();
     Radio::update();
+    if (radio.dirty) {
+    Display::showRadioStatus();
+    radio.dirty = false;
+}
 
     // Other future modules
     // SI5351::update();
