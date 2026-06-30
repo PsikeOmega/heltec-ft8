@@ -146,7 +146,14 @@ void showRadioStatus() {
 
     drawTitleBar("FT8-HELTEC");
 
-    drawFrequency("28.074.000 MHz");
+    char freqText[20];
+    snprintf(freqText, sizeof(freqText), "%lu.%03lu.%03lu MHz",
+        radio.frequency / 1000000UL,
+        (radio.frequency / 1000UL) % 1000UL,
+        radio.frequency % 1000UL);
+
+    drawFrequency(freqText);
+    
     drawHorizontalRule(58);
 
     drawModeLine("USB / FT8");
