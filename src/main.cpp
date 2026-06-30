@@ -4,6 +4,7 @@
 #include "cat/cat.h"
 #include "radio/radio.h"
 #include "radio/radio_state.h"
+#include "hal/hal.h"
 
 void printStartupMessage() {
     Serial.println();
@@ -19,6 +20,8 @@ void setup() {
     delay(1000);
 
     BSP::begin();
+    HAL::begin()
+    
     Display::begin();
     Display::showRadioStatus();
     

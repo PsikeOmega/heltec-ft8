@@ -1,6 +1,7 @@
 #include "radio/radio.h"
 #include "radio/radio_state.h"
 #include <Arduino.h>
+#include "hal/hal.h"
 
 namespace Radio {
 
@@ -11,6 +12,10 @@ void begin() {
 void update() {
 
 }
+
+//================
+// frequency setters
+//================
 
 void setFrequency(uint32_t frequency) {
     radio.frequency = frequency;
@@ -30,6 +35,26 @@ void setPTT(bool enabled) {
 void setCatConnected(bool connected) {
     radio.catConnected = connected;
     radio.dirty = true;
+}
+
+//===============
+// frequency getter 
+//===============
+
+uint32_t getFrequency() {
+    return radio.frequency;
+}
+
+const char* getMode() {
+    return radio.mode;
+}
+
+bool getPTT() {
+    return radio.ptt;
+}
+
+bool isCatConnected() {
+    return radio.catConnected;
 }
 
 }
