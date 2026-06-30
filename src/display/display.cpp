@@ -2,6 +2,7 @@
 #include <Arduino.h>
 #include "HT_E0213A367.h"
 #include "radio/radio_state.h"
+#include "radio/radio.h"
 
 HT_E0213A367 display(3, 2, 5, 1, 4, 6, -1, 6000000);
 // rst, dc, cs, busy, sck, mosi, miso, frequency
@@ -156,7 +157,7 @@ void showRadioStatus() {
     
     drawHorizontalRule(58);
 
-    drawModeLine("USB / FT8");
+    drawModeLine(Radio::getMode());
     drawCatStatus(radio.catConnected ? "ONLINE" : "WAITING");
     drawPttStatus(radio.ptt ? "TX" : "RX");
 
