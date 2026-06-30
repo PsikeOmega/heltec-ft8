@@ -25,10 +25,4 @@ void drawHorizontalRule(int y);
 void drawLabelValue(int x, int y, const char* label, const char* value);
 void drawStatusBox(const char* top, const char* bottom);
 
-void drawFrequency(const char* frequency);
-void drawModeLine(const char* mode);
-void drawCatStatus(const char* status);
-void drawPttStatus(const char* status);
-void drawAudioStatus(const char* status);
-
 }

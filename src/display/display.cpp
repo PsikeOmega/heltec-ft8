@@ -23,6 +23,8 @@ constexpr int STATUS_BOX_H = 70;
 
 namespace Display {
 
+// display lifecycle 
+
 void begin() {
     Serial.println("Display: power");
 
@@ -49,18 +51,57 @@ void refresh() {
     display.display();
 }
 
+// primitive graphics
+
 void drawText(int x, int y, const char* text) {
     display.drawString(x, y, text);
-}
-
-void drawTitle(const char* text) {
-    display.drawString(10, 20, text);
 }
 
 void drawStatusLine(const char* left, const char* right) {
     display.drawString(10, 105, left);
     display.drawString(85, 105, right);
 }
+
+void drawLine(int x0, int y0, int x1, int y1) {
+    display.drawLine(x0, y0, x1, y1);
+}
+
+void drawRect(int x, int y, int w, int h) {
+    display.drawRect(x, y, w, h);
+}
+
+void fillRect(int x, int y, int w, int h) {
+    display.fillRect(x, y, w, h);
+}
+
+void drawHorizontalRule(int y) {
+    display.drawLine(0, y, STATUS_BOX_X - 5, y);
+}
+
+// Widgets
+
+void drawTitle(const char* text) {
+    drawText(10, 20, text);
+}
+
+void drawTitleBar(const char* title) {
+    drawRect(HEADER_X, HEADER_Y, HEADER_W, HEADER_H);
+    drawText(LEFT_X, 7, title);
+}
+
+void drawLabelValue(int x, int y, const char* label, const char* value) {
+    drawText(x, y, label);
+    drawText(x + 55, y, value);
+}
+
+void drawStatusBox(const char* top, const char* bottom) {
+    drawRect(STATUS_BOX_X, STATUS_BOX_Y, STATUS_BOX_W, STATUS_BOX_H);
+
+    drawText(STATUS_BOX_X + 22, STATUS_BOX_Y + 14, top);
+    drawText(STATUS_BOX_X + 14, STATUS_BOX_Y + 38, bottom);
+}
+
+// screens
 
 void showStartup() {
     Serial.println("Display: startup screen");
@@ -75,22 +116,6 @@ void showStartup() {
     refresh();
 
     Serial.println("Display: done");
-}
-
-void drawLabelValue(int x, int y, const char* label, const char* value) {
-    display.drawString(x, y, label);
-    display.drawString(x + 55, y, value);
-}
-
-void drawStatusBox(const char* top, const char* bottom) {
-    drawRect(STATUS_BOX_X, STATUS_BOX_Y, STATUS_BOX_W, STATUS_BOX_H);
-
-    drawText(STATUS_BOX_X + 22, STATUS_BOX_Y + 14, top);
-    drawText(STATUS_BOX_X + 14, STATUS_BOX_Y + 38, bottom);
-}
-
-void drawHorizontalRule(int y) {
-    display.drawLine(0, y, STATUS_BOX_X - 5, y);
 }
 
 void showRadioStatus() {
@@ -112,23 +137,6 @@ void showRadioStatus() {
     refresh();
 
     Serial.println("Display: done");
-}
-
-void drawTitleBar(const char* title) {
-    drawRect(HEADER_X, HEADER_Y, HEADER_W, HEADER_H);
-    drawText(LEFT_X, 7, title);
-}
-
-void drawLine(int x0, int y0, int x1, int y1) {
-    display.drawLine(x0, y0, x1, y1);
-}
-
-void drawRect(int x, int y, int w, int h) {
-    display.drawRect(x, y, w, h);
-}
-
-void fillRect(int x, int y, int w, int h) {
-    display.fillRect(x, y, w, h);
 }
 
 }
