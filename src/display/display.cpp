@@ -47,7 +47,7 @@ void clear() {
     display.clear();
 }
 
-void flush() {
+void refresh() {
     display.update(COLOR_BUFFER);
     display.display();
 }

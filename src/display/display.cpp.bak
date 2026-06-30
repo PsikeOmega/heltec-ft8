@@ -154,7 +154,7 @@ void showRadioStatus() {
     drawPttStatus(radio.ptt ? "TX" : "RX");
 
     drawStatusBox(radio.ptt ? "TX" : "RX",
-                  radio.catConnected ? "CAT OK" : "READY");
+          radio.catConnected ? "CAT OK" : "READY");
 
     refresh();
 
