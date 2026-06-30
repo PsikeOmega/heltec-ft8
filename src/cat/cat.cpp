@@ -15,8 +15,7 @@ void begin() {
 }
 
 void handleCommand(const char* command) {
-    Serial.print("CAT RX: ");
-    Serial.println(command);
+    Serial.printf("CAT RX: %s\n", command);
 
     radio.catConnected = true;
 
