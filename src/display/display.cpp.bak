@@ -81,7 +81,7 @@ void drawHorizontalRule(int y) {
 // Widgets
 
 void drawTitle(const char* text) {
-    display.drawString(10, 20, text);
+    drawText(10, 20, text);
 }
 
 void drawTitleBar(const char* title) {
@@ -90,8 +90,8 @@ void drawTitleBar(const char* title) {
 }
 
 void drawLabelValue(int x, int y, const char* label, const char* value) {
-    display.drawString(x, y, label);
-    display.drawString(x + 55, y, value);
+    drawText(x, y, label);
+    drawText(x + 55, y, value);
 }
 
 void drawStatusBox(const char* top, const char* bottom) {
