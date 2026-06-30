@@ -1,0 +1,7 @@
+namespace Radio {
+
+void begin();
+
+void update();
+
+}

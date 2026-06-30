@@ -1,6 +1,8 @@
 #include <Arduino.h>
 #include "bsp/vision_master_e213.h"
 #include "display/display.h"
+#include "cat/cat.h"
+#include "radio/radio.h"
 
 void printStartupMessage() {
     Serial.println();
@@ -16,15 +18,16 @@ void setup() {
     delay(1000);
 
     BSP::begin();
-
+    Display::begin();
+    Display::showRadioStatus();
+    
+    Radio::begin();
+    CAT::begin();
+    
     printStartupMessage();
     Serial.println("Before display begin");
 
-    Display::begin();
-
     Serial.println("After display begin");
-
-    Display::showRadioStatus();
 
     Serial.println("After display startup");
 }
@@ -35,10 +38,13 @@ void loop() {
     static unsigned long lastPrint = 0;
     unsigned long now = millis();
 
-    if (now - lastPrint >= 6000) {
-        lastPrint = now;
-        printStartupMessage();
-    }
-
     delay(10);
+
+    CAT::update();
+    Radio::update();
+
+    // Other future modules
+    // SI5351::update();
+    // Audio::update();
+    // PTT::update();
 }

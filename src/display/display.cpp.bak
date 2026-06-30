@@ -47,7 +47,7 @@ void clear() {
     display.clear();
 }
 
-void refresh() {
+void flush() {
     display.update(COLOR_BUFFER);
     display.display();
 }
@@ -150,10 +150,11 @@ void showRadioStatus() {
     drawHorizontalRule(58);
 
     drawModeLine("USB / FT8");
-    drawCatStatus("WAITING");
-    drawPttStatus("RX");
+    drawCatStatus(radio.catConnected ? "ONLINE" : "WAITING");
+    drawPttStatus(radio.ptt ? "TX" : "RX");
 
-    drawStatusBox("RX", "READY");
+    drawStatusBox(radio.ptt ? "TX" : "RX",
+                  radio.catConnected ? "CAT OK" : "READY");
 
     refresh();
 

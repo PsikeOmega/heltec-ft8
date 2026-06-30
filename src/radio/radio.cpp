@@ -1,0 +1,18 @@
+#include "radio/radio.h"
+#include <Arduino.h>
+
+namespace Radio {
+
+void begin() {
+    Serial.println("Radio: initialized");
+}
+
+void update() {
+    // Future:
+    // - SI5351 frequency control
+    // - PTT
+    // - Band selection
+    // - Relay control
+}
+
+}

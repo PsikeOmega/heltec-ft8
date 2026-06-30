@@ -47,7 +47,7 @@ void clear() {
     display.clear();
 }
 
-void refresh() {
+void flush() {
     display.update(COLOR_BUFFER);
     display.display();
 }
@@ -154,7 +154,7 @@ void showRadioStatus() {
     drawPttStatus(radio.ptt ? "TX" : "RX");
 
     drawStatusBox(radio.ptt ? "TX" : "RX",
-                  radio.catConnected ? "CAT OK" : "READY");
+          radio.catConnected ? "CAT OK" : "READY");
 
     refresh();
 
