@@ -9,14 +9,7 @@ void begin() {
 }
 
 void update() {
-    static uint32_t lastUpdate = 0;
 
-    if (millis() - lastUpdate > 1000) {
-        lastUpdate = millis();
-
-        radio.catConnected = !radio.catConnected;
-        radio.dirty = true;
-    }
 }
 
 }
