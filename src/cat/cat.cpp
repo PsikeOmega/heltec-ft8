@@ -29,6 +29,8 @@ static void handleCommand(const char* command) {
 
     Radio::setCatConnected(true);
 
+
+//this is the response for a FA function
     if (strcmp(command, "FA") == 0 || strcmp(command, "fa") == 0) {
         char response[20];
         snprintf(response, sizeof(response), "FA%011lu;", Radio::getFrequency());
@@ -42,18 +44,37 @@ static void handleCommand(const char* command) {
             Radio::setFrequency(newFreq);
         }
     }
+    
+    
+//this is the response for an MD function 
     else if (strcmp(command, "MD") == 0 || strcmp(command, "md") == 0) {
         reply("MD2;");
     }
+    
+    
+//this is the response for a TX function 
     else if (strcmp(command, "TX") == 0 || strcmp(command, "tx") == 0) {
         Radio::setPTT(true);
     }
+    
+    
+//this is the return for an RX funtion
     else if (strcmp(command, "RX") == 0 || strcmp(command, "rx") == 0) {
         Radio::setPTT(false);
     }
+    
+    
+//this is the return for an IF function
     else if (strcmp(command, "IF") == 0 || strcmp(command, "if") == 0) {
-        reply("IF;");
-    }
+    char response[40];
+
+    snprintf(response, sizeof(response),
+             "IF%011lu00000000002000000%c0;",
+             Radio::getFrequency(),
+             Radio::getPTT() ? '1' : '0');
+
+    reply(response);
+}
     
 }
 
