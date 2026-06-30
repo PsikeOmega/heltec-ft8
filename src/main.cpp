@@ -3,6 +3,7 @@
 #include "display/display.h"
 #include "cat/cat.h"
 #include "radio/radio.h"
+#include "radio/radio_state.h"
 
 void printStartupMessage() {
     Serial.println();
