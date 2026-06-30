@@ -48,15 +48,15 @@ void setCatConnected(bool connected) {
 //===============
 
 uint32_t getFrequency() {
-    return radio.frequency;
+    return HAL::getFrequency();
 }
 
 const char* getMode() {
-    return radio.mode;
+    return HAL::getMode();
 }
 
 bool getPTT() {
-    return radio.ptt;
+    return HAL::getPTT();
 }
 
 bool isCatConnected() {
