@@ -1,4 +1,5 @@
 #include "radio/radio.h"
+#include "radio/radio_state.h"
 #include <Arduino.h>
 
 namespace Radio {
@@ -8,17 +9,14 @@ void begin() {
 }
 
 void update() {
-    // Future:
-    // - SI5351 frequency control
-    // - PTT
-    // - Band selection
-    // - Relay control
-}
+    static uint32_t lastUpdate = 0;
 
     if (millis() - lastUpdate > 1000) {
-    lastUpdate = millis();
+        lastUpdate = millis();
 
-    radio.catConnected = !radio.catConnected;
-    radio.dirty = true;
+        radio.catConnected = !radio.catConnected;
+        radio.dirty = true;
+    }
 }
+
 }

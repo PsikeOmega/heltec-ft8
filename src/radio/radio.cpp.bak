@@ -15,4 +15,10 @@ void update() {
     // - Relay control
 }
 
+    if (millis() - lastUpdate > 1000) {
+    lastUpdate = millis();
+
+    radio.catConnected = !radio.catConnected;
+    radio.dirty = true;
+}
 }
