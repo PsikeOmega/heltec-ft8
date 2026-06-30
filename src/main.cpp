@@ -20,7 +20,7 @@ void setup() {
     delay(1000);
 
     BSP::begin();
-    HAL::begin()
+    HAL::begin();
     
     Display::begin();
     Display::showRadioStatus();
