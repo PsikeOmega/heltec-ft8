@@ -1,5 +1,5 @@
-#include "radio.h"
-#include "radio_state.h"
+#include "radio/radio.h"
+#include "radio/radio_state.h"
 #include <Arduino.h>
 
 namespace Radio {
@@ -15,6 +15,7 @@ void update() {
         lastUpdate = millis();
 
         radio.catConnected = !radio.catConnected;
+        radio.dirty = true;
     }
 }
 
