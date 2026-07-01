@@ -17,4 +17,10 @@ const char* getMode();
 float getBatteryVoltage();
 bool isCharging();
 
+int getRSSI();
+float getTemperature();
+
+void audioStart();
+void audioStop();
+
 }

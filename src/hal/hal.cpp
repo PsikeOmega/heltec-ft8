@@ -52,4 +52,17 @@ bool isCharging() {
     return false; // Placeholder until charge-status pin is known
 }
 
+int HAL::getRSSI() {
+    return 0;
+}
+
+float HAL::getTemperature() {
+    return 0.0f;
+}
+
+void HAL::audioStart() {
+}
+
+void HAL::audioStop() {
+}
 }
