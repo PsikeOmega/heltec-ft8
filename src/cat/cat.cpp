@@ -158,6 +158,55 @@ static void handleOF()
     reply("OF000000000;");
 }
 
+//===================
+// AI - Auto Information 
+//===================
+
+static void handleAI(const char* command)
+{
+    if (strlen(command) == 2) {
+        reply("AI0;");
+        return;
+    }
+    // Accept AI0 / AI1 / AI2 but don't do anything yet.
+}
+
+//================
+// PS - Power Status 
+//================
+
+static void handlePS()
+{
+    reply("PS1;");
+}
+
+//============
+// AG - AF Gain
+//============
+
+static void handleAG()
+{
+    reply("AG000;");
+}
+
+//============
+// RG - RF Gain
+//============
+
+static void handleRG()
+{
+    reply("RG000;");
+}
+
+//=================
+// PC - Power Control 
+//=================
+
+static void handlePC()
+{
+    reply("PC005;");
+}
+
 //====================
 // Command dispatcher
 //====================
@@ -191,6 +240,21 @@ static void handleCommand(const char* command)
     }
     else if (isCommand(command, "OF")) {
         handleOF();
+    }
+    else if (startsWith(command, "AI")) {
+        handleAI(command);
+    }
+    else if (isCommand(command, "PS")) {
+        handlePS();
+    }
+    else if (isCommand(command, "AG")) {
+        handleAG();
+    }
+    else if (isCommand(command, "RG")) {
+        handleRG();
+    }
+    else if (isCommand(command, "PC")) {
+        handlePC();
     }
 }
 
