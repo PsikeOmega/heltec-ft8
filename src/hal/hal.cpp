@@ -1,55 +1,39 @@
 #include "hal/hal.h"
+#include "synth/si5351_driver.h"
 #include <Arduino.h>
 
 namespace HAL {
 
-static uint32_t currentFrequency = 28074000;
-static bool currentPTT = false;
-static const char* currentMode = "USB";
-
 void begin() {
     Serial.println("HAL: initialized");
+    Si5351Driver::begin();
 }
 
 void setFrequency(uint32_t frequency) {
-    currentFrequency = frequency;
-
     Serial.print("HAL: frequency ");
     Serial.println(frequency);
+
+    Si5351Driver::setFrequency(frequency);
 }
 
 void setPTT(bool enabled) {
-    currentPTT = enabled;
-
     Serial.print("HAL: PTT ");
     Serial.println(enabled ? "TX" : "RX");
+
+    Si5351Driver::enableOutput(enabled);
 }
 
 void setMode(const char* mode) {
-    currentMode = mode;
-
     Serial.print("HAL: mode ");
     Serial.println(mode);
 }
 
-uint32_t getFrequency() {
-    return currentFrequency;
-}
-
-bool getPTT() {
-    return currentPTT;
-}
-
-const char* getMode() {
-    return currentMode;
-}
-
 float getBatteryVoltage() {
-    return 0.0f; // Placeholder until ADC battery read is added
+    return 0.0f;
 }
 
 bool isCharging() {
-    return false; // Placeholder until charge-status pin is known
+    return false;
 }
 
 int getRSSI() {
@@ -67,4 +51,5 @@ void audioStart() {
 void audioStop() {
     Serial.println("HAL: audio stop");
 }
+
 }
