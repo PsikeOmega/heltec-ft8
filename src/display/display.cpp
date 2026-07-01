@@ -1,7 +1,6 @@
 #include "display/display.h"
 #include <Arduino.h>
 #include "HT_E0213A367.h"
-#include "radio/radio_state.h"
 #include "radio/radio.h"
 
 HT_E0213A367 display(3, 2, 5, 1, 4, 6, -1, 6000000);
@@ -149,20 +148,20 @@ void showRadioStatus() {
 
     char freqText[20];
     snprintf(freqText, sizeof(freqText), "%lu.%03lu.%03lu MHz",
-        radio.frequency / 1000000UL,
-        (radio.frequency / 1000UL) % 1000UL,
-        radio.frequency % 1000UL);
+        Radio::getFrequency() / 1000000UL,
+        (Radio::getFrequency() / 1000UL) % 1000UL,
+        Radio::getFrequency() % 1000UL);
 
     drawFrequency(freqText);
     
     drawHorizontalRule(58);
 
     drawModeLine(Radio::getMode());
-    drawCatStatus(radio.catConnected ? "ONLINE" : "WAITING");
-    drawPttStatus(radio.ptt ? "TX" : "RX");
+    drawCatStatus(Radio::isCatConnected() ? "ONLINE" : "WAITING");
+    drawPttStatus(Radio::getPTT() ? "TX" : "RX");
 
-    drawStatusBox(radio.ptt ? "TX" : "RX",
-          radio.catConnected ? "CAT OK" : "READY");
+    drawStatusBox(Radio::getPTT() ? "TX" : "RX",
+          Radio::isCatConnected() ? "CAT OK" : "READY");
 
     refresh();
 
