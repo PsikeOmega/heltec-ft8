@@ -1,4 +1,5 @@
 #include "synth/si5351_driver.h"
+#include "bsp/vision_master_e213.h"
 
 #include <Arduino.h>
 #include <Wire.h>
@@ -19,14 +20,13 @@ void begin()
 {
     Serial.println("Si5351: initializing I2C");
 
-    Wire.begin();
+    Wire.begin(BSP::I2C_SDA_PIN, BSP::I2C_SCL_PIN);
 
     detected = probe();
 
     if (detected) {
         Serial.println("Si5351: found at 0x60");
-    }
-    else {
+    } else {
         Serial.println("Si5351: NOT found at 0x60");
     }
 }
@@ -35,26 +35,12 @@ void setFrequency(uint32_t frequency)
 {
     Serial.print("Si5351: set frequency ");
     Serial.println(frequency);
-
-    if (!detected) {
-        Serial.println("Si5351: skipped, chip not detected");
-        return;
-    }
-
-    // Real frequency programming comes next.
 }
 
 void enableOutput(bool enabled)
 {
     Serial.print("Si5351: output ");
     Serial.println(enabled ? "enabled" : "disabled");
-
-    if (!detected) {
-        Serial.println("Si5351: skipped, chip not detected");
-        return;
-    }
-
-    // Real output enable/disable comes next.
 }
 
 }
