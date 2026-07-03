@@ -37,5 +37,7 @@ jobs:
         with:
           name: firmware-build-output
           path: |
-            .pio/build/
+            .pio/build/**/bootloader.bin
+            .pio/build/**/partitions.bin
+            .pio/build/**/firmware.bin
             build-log.txt

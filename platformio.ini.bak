@@ -17,4 +17,3 @@ build_flags =
 lib_deps =
     https://github.com/HelTecAutomation/Heltec_ESP32.git
     adafruit/Adafruit GFX Library
-    adafruit/Adafruit GFX Library
