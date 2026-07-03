@@ -12,6 +12,7 @@ build_flags =
     -D LoRaWAN_DEBUG_LEVEL=0
     -D HELTEC_BOARD=1
     -D SLOW_CLK_TPYE=0
+    -D RADIO_NSS=-1
 
 lib_deps =
     https://github.com/HelTecAutomation/Heltec_ESP32.git
