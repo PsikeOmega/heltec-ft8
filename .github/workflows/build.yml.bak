@@ -10,20 +10,24 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repo
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
           python-version: "3.x"
 
-      - run: pip install platformio
+      - name: Install PlatformIO
+        run: pip install platformio
 
-      - run: pio run
+      - name: Build firmware
+        run: |
+          pio run -v 2>&1 | tee build-log.txt
 
-      - uses: actions/upload-artifact@v4
+      - name: Upload build log
+        if: always()
+        uses: actions/upload-artifact@v4
         with:
-          name: ft8-heltec-firmware
-          path: |
-            .pio/build/heltec-ft8-cat/firmware.bin
-            .pio/build/heltec-ft8-cat/bootloader.bin
-            .pio/build/heltec-ft8-cat/partitions.bin
+          name: full-build-log
+          path: build-log.txt
