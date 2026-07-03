@@ -6,7 +6,9 @@ namespace HAL {
 
 void begin() {
     Serial.println("HAL: initialized");
+    Serial.println("HAL: about to call Si5351Driver::begin()");
     Si5351Driver::begin();
+    Serial.println("HAL: returned from Si5351Driver::begin()");
 }
 
 void setFrequency(uint32_t frequency) {

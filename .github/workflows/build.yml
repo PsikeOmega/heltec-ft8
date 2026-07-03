@@ -31,13 +31,18 @@ jobs:
         run: |
           find .pio/build -maxdepth 2 -type f
 
+      - name: Collect firmware files
+        if: always()
+        run: |
+          mkdir -p dist
+          find .pio/build -name bootloader.bin -exec cp {} dist/bootloader.bin \;
+          find .pio/build -name partitions.bin -exec cp {} dist/partitions.bin \;
+          find .pio/build -name firmware.bin -exec cp {} dist/firmware.bin \;
+          cp build-log.txt dist/build-log.txt
+
       - name: Upload firmware and build log
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: firmware-build-output
-          path: |
-            .pio/build/**/bootloader.bin
-            .pio/build/**/partitions.bin
-            .pio/build/**/firmware.bin
-            build-log.txt
+          path: dist/
