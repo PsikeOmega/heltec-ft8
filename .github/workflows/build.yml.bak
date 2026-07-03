@@ -25,9 +25,12 @@ jobs:
         run: |
           pio run -v 2>&1 | tee build-log.txt
 
-      - name: Upload build log
+      - name: Upload firmware and build log
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: full-build-log
-          path: build-log.txt
+        name: firmware-build-output
+        path: |
+          .pio/build/**/firmware.bin
+          .pio/build/**/firmware.elf
+          build-log.txt
