@@ -18,7 +18,7 @@ static bool probe()
 
 void begin()
 {
-    Serial.println("Si5351: initializing I2C");
+    Serial.println("***** SI5351 DRIVER V2 *****");
 
     Wire.begin(BSP::I2C_SDA_PIN, BSP::I2C_SCL_PIN);
 
