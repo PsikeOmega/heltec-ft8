@@ -21,6 +21,25 @@ void begin()
     Serial.println("***** SI5351 DRIVER V2 *****");
 
     Wire.begin(BSP::I2C_SDA_PIN, BSP::I2C_SCL_PIN);
+    delay(100);
+
+    Serial.println("Scanning I2C bus...");
+
+    bool foundAny = false;
+
+    for (uint8_t addr = 1; addr < 127; addr++) {
+        Wire.beginTransmission(addr);
+        if (Wire.endTransmission() == 0) {
+            Serial.print("I2C device found at 0x");
+            if (addr < 16) Serial.print('0');
+            Serial.println(addr, HEX);
+            foundAny = true;
+        }
+    }
+
+    if (!foundAny) {
+        Serial.println("No I2C devices found");
+    }
 
     detected = probe();
 
