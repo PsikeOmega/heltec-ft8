@@ -31,6 +31,5 @@ jobs:
         with:
           name: firmware-build-output
           path: |
-            .pio/build/**/firmware.bin
-            .pio/build/**/firmware.elf
+            .pio/build/
             build-log.txt

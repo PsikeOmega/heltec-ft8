@@ -22,8 +22,14 @@ jobs:
         run: pip install platformio
 
       - name: Build firmware
+        shell: bash
         run: |
+          set -o pipefail
           pio run -v 2>&1 | tee build-log.txt
+      - name: Show build directory
+        if: always()
+        run: |
+          find .pio/build -maxdepth 2 -type f
 
       - name: Upload firmware and build log
         if: always()
