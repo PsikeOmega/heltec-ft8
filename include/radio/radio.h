@@ -1,5 +1,7 @@
 #pragma once
 
+#include "radio/radio_state.h"
+
 #include <stdint.h>
 
 namespace Radio {

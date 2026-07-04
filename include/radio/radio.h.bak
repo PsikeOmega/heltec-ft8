@@ -22,5 +22,6 @@ const char* getMode();
 bool getPTT();
 bool isCatConnected();
 
+const char* modeToString(RadioMode mode);
 
 }
