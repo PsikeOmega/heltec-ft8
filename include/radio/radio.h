@@ -20,7 +20,6 @@ void setCatConnected(bool connected);
 //===============
 
 uint32_t getFrequency();
-const char* getMode();
 bool getPTT();
 bool isCatConnected();
 

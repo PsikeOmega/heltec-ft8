@@ -1,5 +1,7 @@
 #pragma once
 
+#include "radio/radio_state.h"
+
 #include <stdint.h>
 
 namespace Radio {
@@ -18,7 +20,7 @@ void setCatConnected(bool connected);
 //===============
 
 uint32_t getFrequency();
-const char* getMode();
+RadioMode getMode();
 bool getPTT();
 bool isCatConnected();
 

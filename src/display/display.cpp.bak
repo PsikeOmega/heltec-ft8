@@ -1,7 +1,6 @@
 #include "display/display.h"
 #include <Arduino.h>
 #include "HT_E0213A367.h"
-#include "radio/radio_state.h"
 #include "radio/radio.h"
 
 HT_E0213A367 display(3, 2, 5, 1, 4, 6, -1, 6000000);
