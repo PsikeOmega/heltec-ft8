@@ -2,17 +2,29 @@
 
 #include <stdint.h>
 
-    struct RadioState {
-        uint32_t frequency = 28074000;
-        uint8_t activeBand = 0;
-
-        bool catConnected = false;
-        bool ptt = false;
-        bool dirty = true;
-
-        const char* mode = "USB";
+enum class RadioMode : uint8_t {
+    LSB,
+    USB,
+    CW,
+    FM,
+    AM,
+    DIGI
 };
-// Future: select among SI5351 outputs/band presets
+
+struct RadioState {
+    uint32_t frequency = 28074000;
+    uint8_t activeBand = 0;
+
+    RadioMode mode = RadioMode::USB;
+
+    bool catConnected = false;
+    bool ptt = false;
+    bool dirty = true;
+
+    int rssi = 0;
+    uint8_t powerLevel = 5;
+};
+
 extern RadioState radio;
 
 // Future expansion:

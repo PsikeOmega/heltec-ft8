@@ -88,21 +88,35 @@ static void handleFB(const char* command)
 static void handleMD(const char* command)
 {
     if (strlen(command) == 2) {
-        reply("MD2;");
+        switch (Radio::getMode()) {
+            case RadioMode::LSB:  reply("MD1;"); break;
+            case RadioMode::USB:  reply("MD2;"); break;
+            case RadioMode::CW:   reply("MD3;"); break;
+            case RadioMode::FM:   reply("MD4;"); break;
+            case RadioMode::AM:   reply("MD5;"); break;
+            case RadioMode::DIGI: reply("MD9;"); break;
+            default:              reply("MD2;"); break;
+        }
         return;
     }
 
     if (isCommand(command, "MD1")) {
-        Radio::setMode("LSB");
+        Radio::setMode(RadioMode::LSB);
     }
     else if (isCommand(command, "MD2")) {
-        Radio::setMode("USB");
+        Radio::setMode(RadioMode::USB);
     }
     else if (isCommand(command, "MD3")) {
-        Radio::setMode("CW");
+        Radio::setMode(RadioMode::CW);
     }
     else if (isCommand(command, "MD4")) {
-        Radio::setMode("FM");
+        Radio::setMode(RadioMode::FM);
+    }
+    else if (isCommand(command, "MD5")) {
+        Radio::setMode(RadioMode::AM);
+    }
+    else if (isCommand(command, "MD9")) {
+        Radio::setMode(RadioMode::DIGI);
     }
 }
 

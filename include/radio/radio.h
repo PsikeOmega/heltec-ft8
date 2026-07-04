@@ -8,7 +8,8 @@ void begin();
 void update();
 
 void setFrequency(uint32_t frequency);
-void setMode(const char* mode);
+void setMode(RadioMode mode);
+RadioMode getMode();
 void setPTT(bool enabled);
 void setCatConnected(bool connected);
 
@@ -21,5 +22,6 @@ const char* getMode();
 bool getPTT();
 bool isCatConnected();
 
+const char* modeToString(RadioMode mode);
 
 }
