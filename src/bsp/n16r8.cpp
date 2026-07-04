@@ -1,24 +1,22 @@
 #include "bsp/n16r8.h"
 
-namespace N16R8 {
+namespace BSP {
 
 static TwoWire* i2cBus = &Wire;
 static SPIClass* spiBus = &SPI;
 
-void begin() {
-    Serial.begin(SERIAL_BAUD);
-    delay(300);
-
-    printBoardInfo();
-    beginI2C();
-
-    Serial.println("[N16R8] BSP ready.");
+const char* boardName() {
+    return BOARD_NAME;
 }
 
-void printBoardInfo() {
+const char* displayName() {
+    return DISPLAY_NAME;
+}
+
+void begin() {
     Serial.println();
     Serial.println("================================");
-    Serial.println("[N16R8] Board startup");
+    Serial.println("[N16R8] BSP startup");
 
     Serial.print("[N16R8] Board: ");
     Serial.println(BOARD_NAME);
@@ -47,10 +45,6 @@ void printBoardInfo() {
     Serial.print("[N16R8] Display enabled: ");
     Serial.println(HAS_DISPLAY ? "yes" : "no");
 
-    Serial.println("================================");
-}
-
-void beginI2C() {
     Serial.print("[N16R8] Starting I2C SDA GPIO");
     Serial.print(I2C_SDA);
     Serial.print(", SCL GPIO");
@@ -59,6 +53,19 @@ void beginI2C() {
     i2cBus->begin(I2C_SDA, I2C_SCL, I2C_FREQ);
 
     Serial.println("[N16R8] I2C ready.");
+    Serial.println("[N16R8] BSP ready.");
+    Serial.println("================================");
+}
+
+void update() {
+}
+
+float readBatteryVoltage() {
+    return -1.0f;
+}
+
+int readBatteryPercent() {
+    return -1;
 }
 
 TwoWire& i2c() {
@@ -83,4 +90,4 @@ SPIClass& spi() {
     return *spiBus;
 }
 
-} // namespace N16R8
+} // namespace BSP
