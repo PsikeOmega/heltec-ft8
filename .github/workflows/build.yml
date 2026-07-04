@@ -21,28 +21,41 @@ jobs:
       - name: Install PlatformIO
         run: pip install platformio
 
-      - name: Build firmware
+      - name: Build E213 and N16R8
         shell: bash
         run: |
-          set -o pipefail
-          pio run -v 2>&1 | tee build-log.txt
-      - name: Show build directory
-        if: always()
-        run: |
-          find .pio/build -maxdepth 2 -type f
+          set +e
+          : > build.log
+
+          echo "===== BUILD E213 =====" | tee -a build.log
+          pio run -e e213 -v 2>&1 | tee -a build.log
+          E213_STATUS=${PIPESTATUS[0]}
+
+          echo "===== BUILD N16R8 =====" | tee -a build.log
+          pio run -e n16r8 -v 2>&1 | tee -a build.log
+          N16R8_STATUS=${PIPESTATUS[0]}
+
+          exit $((E213_STATUS + N16R8_STATUS))
 
       - name: Collect firmware files
         if: always()
+        shell: bash
         run: |
           mkdir -p dist
-          find .pio/build -name bootloader.bin -exec cp {} dist/bootloader.bin \;
-          find .pio/build -name partitions.bin -exec cp {} dist/partitions.bin \;
-          find .pio/build -name firmware.bin -exec cp {} dist/firmware.bin \;
-          cp build-log.txt dist/build-log.txt
 
-      - name: Upload firmware and build log
+          cp .pio/build/e213/bootloader.bin  dist/E213-bootloader.bin  2>/dev/null || true
+          cp .pio/build/e213/partitions.bin  dist/E213-partition.bin   2>/dev/null || true
+          cp .pio/build/e213/firmware.bin    dist/E213-firmware.bin    2>/dev/null || true
+
+          cp .pio/build/n16r8/bootloader.bin dist/N16R8-bootloader.bin 2>/dev/null || true
+          cp .pio/build/n16r8/partitions.bin dist/N16R8-partition.bin  2>/dev/null || true
+          cp .pio/build/n16r8/firmware.bin   dist/N16R8-firmware.bin   2>/dev/null || true
+
+          cp build.log dist/build.log
+
+      - name: Upload firmware package
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: firmware-build-output
-          path: dist/
+          name: firmware-package
+          path: dist/*

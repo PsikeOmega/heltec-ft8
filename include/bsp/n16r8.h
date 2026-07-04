@@ -17,8 +17,8 @@ constexpr uint32_t SERIAL_BAUD = 115200;
 // I2C
 // ESP32-S3 Arduino default/common pins:
 // SDA = GPIO8, SCL = GPIO9
-constexpr int I2C_SDA = 8;
-constexpr int I2C_SCL = 9;
+constexpr int I2C_SDA = 13;
+constexpr int I2C_SCL = 12;
 constexpr uint32_t I2C_FREQ = 400000;
 
 // SPI placeholders only.
