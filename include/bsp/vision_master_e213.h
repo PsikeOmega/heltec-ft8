@@ -4,8 +4,8 @@
 
 namespace BSP {
 
-constexpr uint8_t I2C_SDA_PIN = 45;
-constexpr uint8_t I2C_SCL_PIN = 46;
+constexpr uint8_t I2C_SDA_PIN = 39;
+constexpr uint8_t I2C_SCL_PIN = 38;
 
 const char* boardName();
 const char* displayName();
