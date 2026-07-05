@@ -26,7 +26,7 @@ void printStartupMessage() {
 }
 
 void setup() {
-    #if defined(BOARD_T114)
+    #if defined(HELTEC_T114)
     Serial.begin(115200);
     delay(8000);
 

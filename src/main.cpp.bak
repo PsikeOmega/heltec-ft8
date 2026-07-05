@@ -26,6 +26,16 @@ void printStartupMessage() {
 }
 
 void setup() {
+    #if defined(BOARD_T114)
+    Serial.begin(115200);
+    delay(8000);
+
+    while (true) {
+        Serial.println("Hello from T114");
+        delay(1000);
+    }
+    #endif
+
     Serial.begin(115200);
     delay(8000); //milliseconds before serial begin
     Serial.println("MAIN: setup entered");
