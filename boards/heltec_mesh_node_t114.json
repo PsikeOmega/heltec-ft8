@@ -8,10 +8,22 @@
     "extra_flags": "-DHELTEC_T114 -DNRF52840_XXAA",
     "f_cpu": "64000000L",
     "hwids": [
-      ["0x239A", "0x4405"],
-      ["0x239A", "0x0029"],
-      ["0x239A", "0x002A"],
-      ["0x2886", "0x1667"]
+      [
+        "0x239A",
+        "0x8071"
+      ],
+      [
+        "0x239A",
+        "0x0071"
+      ],
+      [
+        "0x239A",
+        "0x8072"
+      ],
+      [
+        "0x239A",
+        "0x4405"
+      ]
     ],
     "usb_product": "HT-n5262",
     "mcu": "nrf52840",
@@ -28,23 +40,37 @@
     },
     "bootloader": {
       "settings_addr": "0xFF000"
-    }
+    },
+    "vid": "0x239A",
+    "pid": "0x8071",
+    "usb_manufacturer": "Heltec"
   },
-  "connectivity": ["bluetooth"],
+  "connectivity": [
+    "bluetooth"
+  ],
   "debug": {
     "jlink_device": "nRF52840_xxAA",
-    "onboard_tools": ["jlink"],
+    "onboard_tools": [
+      "jlink"
+    ],
     "svd_path": "nrf52840.svd",
     "openocd_target": "nrf52840-mdk-rs"
   },
-  "frameworks": ["arduino"],
-  "name": "Heltec nrf (Adafruit BSP)",
+  "frameworks": [
+    "arduino"
+  ],
+  "name": "Heltec Mesh Node T114 (HT-n5262)",
   "upload": {
     "maximum_ram_size": 248832,
     "maximum_size": 815104,
     "speed": 115200,
     "protocol": "nrfutil",
-    "protocols": ["jlink", "nrfjprog", "nrfutil", "stlink"],
+    "protocols": [
+      "jlink",
+      "nrfjprog",
+      "nrfutil",
+      "stlink"
+    ],
     "use_1200bps_touch": true,
     "require_upload_port": true,
     "wait_for_upload_port": true
