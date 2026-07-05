@@ -156,7 +156,7 @@ void showRadioStatus() {
     
     drawHorizontalRule(58);
 
-    drawModeLine(Radio::getMode());
+    drawModeLine(Radio::modeToString(Radio::getMode()));
     drawCatStatus(Radio::isCatConnected() ? "ONLINE" : "WAITING");
     drawPttStatus(Radio::getPTT() ? "TX" : "RX");
 

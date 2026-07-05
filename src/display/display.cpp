@@ -1,3 +1,5 @@
+#ifdef Vision_Master_E213
+
 #include "display/display.h"
 #include <Arduino.h>
 #include "HT_E0213A367.h"
@@ -169,3 +171,36 @@ void showRadioStatus() {
 }
 
 }
+
+#else
+
+#include "display/display.h"
+#include <Arduino.h>
+
+namespace Display {
+
+void begin() {
+    Serial.println("Display: headless mode");
+}
+
+void clear() {}
+void refresh() {}
+
+void drawText(int, int, const char*) {}
+void drawStatusLine(const char*, const char*) {}
+void drawLine(int, int, int, int) {}
+void drawRect(int, int, int, int) {}
+void fillRect(int, int, int, int) {}
+void drawHorizontalRule(int) {}
+
+void showStartup() {
+    Serial.println("Display: startup skipped, headless");
+}
+
+void showRadioStatus() {
+    Serial.println("Display: radio status skipped, headless");
+}
+
+}
+
+#endif
