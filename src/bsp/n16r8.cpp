@@ -47,7 +47,7 @@ bool hasSPI() {
 
 void beginSPI() {
     if (!hasSPI()) {
-        Serial.println("[N16R8] SPI pins are not assigned yet");
+        Serial.println("[N16R8] SPI disabled");
         return;
     }
 
