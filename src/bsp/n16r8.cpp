@@ -6,55 +6,22 @@ static TwoWire* i2cBus = &Wire;
 static SPIClass* spiBus = &SPI;
 
 const char* boardName() {
-    return BOARD_NAME;
+    return N16R8::BOARD_NAME;
 }
 
 const char* displayName() {
-    return DISPLAY_NAME;
+    return "Headless";
 }
 
 void begin() {
     Serial.println();
-    Serial.println("================================");
     Serial.println("[N16R8] BSP startup");
+    Serial.println(N16R8::BOARD_NAME);
 
-    Serial.print("[N16R8] Board: ");
-    Serial.println(BOARD_NAME);
+    i2cBus->begin(N16R8::I2C_SDA, N16R8::I2C_SCL, N16R8::I2C_FREQ);
 
-    Serial.print("[N16R8] Family: ");
-    Serial.println(BOARD_FAMILY);
-
-    Serial.print("[N16R8] Variant: ");
-    Serial.println(BOARD_VARIANT);
-
-    Serial.print("[N16R8] Chip model: ");
-    Serial.println(ESP.getChipModel());
-
-    Serial.print("[N16R8] Chip revision: ");
-    Serial.println(ESP.getChipRevision());
-
-    Serial.print("[N16R8] CPU MHz: ");
-    Serial.println(ESP.getCpuFreqMHz());
-
-    Serial.print("[N16R8] Flash size bytes: ");
-    Serial.println(ESP.getFlashChipSize());
-
-    Serial.print("[N16R8] PSRAM size bytes: ");
-    Serial.println(ESP.getPsramSize());
-
-    Serial.print("[N16R8] Display enabled: ");
-    Serial.println(HAS_DISPLAY ? "yes" : "no");
-
-    Serial.print("[N16R8] Starting I2C SDA GPIO");
-    Serial.print(I2C_SDA);
-    Serial.print(", SCL GPIO");
-    Serial.println(I2C_SCL);
-
-    i2cBus->begin(I2C_SDA, I2C_SCL, I2C_FREQ);
-
-    Serial.println("[N16R8] I2C ready.");
-    Serial.println("[N16R8] BSP ready.");
-    Serial.println("================================");
+    Serial.println("[N16R8] I2C ready");
+    Serial.println("[N16R8] BSP ready");
 }
 
 void update() {
@@ -73,21 +40,27 @@ TwoWire& i2c() {
 }
 
 bool hasSPI() {
-    return SPI_SCK >= 0 && SPI_MISO >= 0 && SPI_MOSI >= 0;
+    return N16R8::SPI_SCK >= 0 &&
+           N16R8::SPI_MISO >= 0 &&
+           N16R8::SPI_MOSI >= 0;
 }
 
 void beginSPI() {
     if (!hasSPI()) {
-        Serial.println("[N16R8] SPI pins are not assigned yet. Skipping SPI begin.");
+        Serial.println("[N16R8] SPI pins are not assigned yet");
         return;
     }
 
-    spiBus->begin(SPI_SCK, SPI_MISO, SPI_MOSI, SPI_CS);
-    Serial.println("[N16R8] SPI ready.");
+    spiBus->begin(
+        N16R8::SPI_SCK,
+        N16R8::SPI_MISO,
+        N16R8::SPI_MOSI,
+        N16R8::SPI_CS
+    );
 }
 
 SPIClass& spi() {
     return *spiBus;
 }
 
-} // namespace BSP
+}
