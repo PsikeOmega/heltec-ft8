@@ -1,5 +1,13 @@
 #include <Arduino.h>
+
+#if defined(Vision_Master_E213)
 #include "bsp/vision_master_e213.h"
+#elif defined(ESP32_S3_N16R8)
+#include "bsp/n16r8.h"
+#else
+#error "No BSP selected"
+#endif
+
 #include "display/display.h"
 #include "cat/cat.h"
 #include "radio/radio.h"

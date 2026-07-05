@@ -21,6 +21,7 @@ build_flags =
     -D LORA_MOSI=-1
     -D LORA_NSS=-1
 
+
 lib_deps =
     https://github.com/HelTecAutomation/Heltec_ESP32.git
     adafruit/Adafruit GFX Library
@@ -48,14 +49,16 @@ src_filter =
     -<bsp/vision_master_e213.cpp>
     
 [env:t114]
-platform = nordicnrf52
+platform = platformio/nordicnrf52@10.11.0
+platform_packages =
+    platformio/framework-arduinoadafruitnrf52 @ https://github.com/meshtastic/Adafruit_nRF52_Arduino#cpp17-platform
+    platformio/toolchain-gccarmnoneeabi@~1.90301.0
 framework = arduino
-board = heltec_t114
-
-extra_scripts =
-    extra_scripts/nrf52_uf2.py
-
+board = heltec_mesh_node_t114
+build_type = release
+extra_scripts = extra_scripts/nrf52_uf2.py
 build_flags =
+    ${env.build_flags}
     -D HELTEC_T114
 
 src_filter =

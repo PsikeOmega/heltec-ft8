@@ -4,6 +4,8 @@
 #include "bsp/vision_master_e213.h"
 #elif defined(ESP32_S3_N16R8)
 #include "bsp/n16r8.h"
+#elif defined(HELTEC_T114)
+#include "bsp/t114.h"
 #else
 #error "No BSP selected"
 #endif
