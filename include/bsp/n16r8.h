@@ -7,8 +7,8 @@ namespace BSP {
 constexpr const char* BOARD_NAME = "ESP32-S3 N16R8";
 constexpr const char* DISPLAY_NAME = "Headless";
 
-constexpr uint8_t I2C_SDA_PIN = 13;
-constexpr uint8_t I2C_SCL_PIN = 12;
+constexpr uint8_t I2C_SDA_PIN = 8;
+constexpr uint8_t I2C_SCL_PIN = 9;
 
 constexpr uint32_t I2C_FREQ = 400000;
 
