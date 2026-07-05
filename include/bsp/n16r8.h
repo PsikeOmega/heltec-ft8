@@ -9,7 +9,6 @@ constexpr const char* DISPLAY_NAME = "Headless";
 
 constexpr uint8_t I2C_SDA_PIN = 8;
 constexpr uint8_t I2C_SCL_PIN = 9;
-
 constexpr uint32_t I2C_FREQ = 400000;
 
 constexpr int8_t SPI_SCK  = -1;
@@ -22,6 +21,10 @@ const char* displayName();
 
 void begin();
 void update();
+
+void beginI2C();
+void beginSPI();
+bool hasSPI();
 
 float readBatteryVoltage();
 int readBatteryPercent();

@@ -1,3 +1,7 @@
+#include <Arduino.h>
+#include <Wire.h>
+#include <SPI.h>
+
 #include "bsp/vision_master_e213.h"
 
 namespace BSP {
@@ -19,6 +23,14 @@ void begin() {
 
 void update() {
     // Board-specific periodic tasks will live here.
+}
+
+void beginI2C() {
+    Wire.begin(I2C_SDA_PIN, I2C_SCL_PIN, I2C_FREQ);
+}
+
+void beginSPI() {
+    SPI.begin();
 }
 
 float readBatteryVoltage() {

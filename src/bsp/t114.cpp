@@ -1,5 +1,6 @@
 #include <Arduino.h>
 #include <Wire.h>
+#include <SPI.h>
 
 #include "bsp/t114.h"
 
@@ -18,13 +19,21 @@ void begin() {
     Serial.println("[T114] BSP startup");
     Serial.println(BOARD_NAME);
 
-    Wire.begin();
+    beginI2C();
 
     Serial.println("[T114] I2C ready");
     Serial.println("[T114] BSP ready");
 }
 
 void update() {
+}
+
+void beginI2C() {
+    Wire.begin();
+}
+
+void beginSPI() {
+    SPI.begin();
 }
 
 float readBatteryVoltage() {

@@ -10,12 +10,16 @@ namespace BSP {
 // SCL -> GPIO38
 constexpr uint8_t I2C_SDA_PIN = 39;
 constexpr uint8_t I2C_SCL_PIN = 38;
+constexpr uint32_t I2C_FREQ = 400000;
 
 const char* boardName();
 const char* displayName();
 
 void begin();
 void update();
+
+void beginI2C();
+void beginSPI();
 
 float readBatteryVoltage();
 int readBatteryPercent();

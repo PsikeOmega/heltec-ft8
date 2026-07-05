@@ -1,5 +1,14 @@
 #include "synth/si5351_driver.h"
+
+#if defined(Vision_Master_E213)
 #include "bsp/vision_master_e213.h"
+#elif defined(ESP32_S3_N16R8)
+#include "bsp/n16r8.h"
+#elif defined(HELTEC_T114)
+#include "bsp/t114.h"
+#else
+#error "No BSP selected for Si5351 driver"
+#endif
 
 #include <Arduino.h>
 #include <Wire.h>
@@ -7,7 +16,6 @@
 namespace Si5351Driver {
 
 constexpr uint8_t SI5351_ADDR = 0x60;
-constexpr uint32_t XTAL_FREQ = 25000000UL;
 constexpr uint32_t PLL_FREQ  = 900000000UL;
 
 static bool detected = false;
@@ -42,16 +50,10 @@ static void writeParams(uint8_t base, uint32_t p1, uint32_t p2, uint32_t p3)
 
 static void setPLL()
 {
-    // PLLA = 25 MHz * 36 = 900 MHz
     uint32_t a = 36;
-    uint32_t b = 0;
-    uint32_t c = 1;
-
     uint32_t p1 = 128 * a - 512;
-    uint32_t p2 = 0;
-    uint32_t p3 = c;
 
-    writeParams(26, p1, p2, p3); // PLLA registers
+    writeParams(26, p1, 0, 1);
 }
 
 static void setCLK0(uint32_t frequency)
@@ -67,12 +69,9 @@ static void setCLK0(uint32_t frequency)
     uint32_t p2 = 128 * b - c * ((128 * b) / c);
     uint32_t p3 = c;
 
-    writeParams(42, p1, p2, p3); // CLK0 multisynth registers
+    writeParams(42, p1, p2, p3);
 
-    // CLK0 control: use multisynth, PLLA, 8mA drive
     writeReg(16, 0x0F);
-
-    // Reset PLLA
     writeReg(177, 0x20);
 }
 
@@ -80,7 +79,7 @@ void begin()
 {
     Serial.println("***** SI5351 DRIVER V3 RF OUTPUT *****");
 
-    Wire.begin(BSP::I2C_SDA_PIN, BSP::I2C_SCL_PIN);
+    BSP::beginI2C();
     delay(100);
 
     detected = probe();
@@ -88,7 +87,6 @@ void begin()
     if (detected) {
         Serial.println("Si5351: found at 0x60");
 
-        // Disable all outputs while configuring
         writeReg(3, 0xFF);
 
         setPLL();
@@ -133,9 +131,9 @@ void enableOutput(bool enabled)
     }
 
     if (enabled) {
-        writeReg(3, 0xFE); // enable CLK0 only
+        writeReg(3, 0xFE);
     } else {
-        writeReg(3, 0xFF); // disable all outputs
+        writeReg(3, 0xFF);
     }
 }
 

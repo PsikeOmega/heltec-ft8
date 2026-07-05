@@ -22,13 +22,17 @@ void begin() {
     Serial.println("[N16R8] BSP startup");
     Serial.println(BOARD_NAME);
 
-    i2cBus->begin(I2C_SDA_PIN, I2C_SCL_PIN, I2C_FREQ);
+    beginI2C();
 
     Serial.println("[N16R8] I2C ready");
     Serial.println("[N16R8] BSP ready");
 }
 
 void update() {
+}
+
+void beginI2C() {
+    i2cBus->begin(I2C_SDA_PIN, I2C_SCL_PIN, I2C_FREQ);
 }
 
 float readBatteryVoltage() {
