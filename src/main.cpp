@@ -17,7 +17,8 @@ void printStartupMessage() {
 
 void setup() {
     Serial.begin(115200);
-    delay(5000); //milliseconds before serial begin
+    delay(8000); //milliseconds before serial begin
+    Serial.println("MAIN: setup entered");
 
     BSP::begin();
     HAL::begin();
