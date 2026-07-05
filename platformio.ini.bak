@@ -1,5 +1,5 @@
 [platformio]
-default_envs = e213, n16r8
+default_envs = e213, n16r8, t114
 
 [env]
 platform = espressif32
@@ -37,12 +37,28 @@ src_filter =
 [env:n16r8]
 board = esp32-s3-devkitc-1
 board_build.flash_size = 16MB
-;board_build.arduino.memory_type = qio_opi
-;board_build.flash_mode = qio
-;board_build.psram_type = opi
+board_build.arduino.memory_type = qio_opi
+board_build.flash_mode = qio
+board_build.psram_type = opi
 build_flags =
     ${env.build_flags}
     -D ESP32_S3_N16R8
 src_filter =
     +<*>
     -<bsp/vision_master_e213.cpp>
+    
+[env:t114]
+platform = nordicnrf52
+framework = arduino
+board = heltec_t114
+
+extra_scripts =
+    extra_scripts/nrf52_uf2.py
+
+build_flags =
+    -D HELTEC_T114
+
+src_filter =
+    +<*>
+    -<bsp/vision_master_e213.cpp>
+    -<bsp/n16r8.cpp>

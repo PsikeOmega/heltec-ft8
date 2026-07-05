@@ -21,7 +21,7 @@ jobs:
       - name: Install PlatformIO
         run: pip install platformio
 
-      - name: Build E213 and N16R8
+      - name: Build all targets
         shell: bash
         run: |
           set +e
@@ -35,7 +35,11 @@ jobs:
           pio run -e n16r8 -v 2>&1 | tee -a build.log
           N16R8_STATUS=${PIPESTATUS[0]}
 
-          exit $((E213_STATUS + N16R8_STATUS))
+          echo "===== BUILD T114 =====" | tee -a build.log
+          pio run -e t114 -v 2>&1 | tee -a build.log
+          T114_STATUS=${PIPESTATUS[0]}
+
+          exit $((E213_STATUS + N16R8_STATUS +T114_STATUS))
 
       - name: Collect firmware files
         if: always()
@@ -50,6 +54,7 @@ jobs:
           cp .pio/build/n16r8/bootloader.bin dist/N16R8-bootloader.bin 2>/dev/null || true
           cp .pio/build/n16r8/partitions.bin dist/N16R8-partition.bin  2>/dev/null || true
           cp .pio/build/n16r8/firmware.bin   dist/N16R8-firmware.bin   2>/dev/null || true
+          cp .pio/build/t114/firmware.uf2 dist/T114-firmware.uf2 2>/dev/null || true
 
           cp build.log dist/build.log
 

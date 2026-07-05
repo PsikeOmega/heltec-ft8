@@ -21,11 +21,25 @@ jobs:
       - name: Install PlatformIO
         run: pip install platformio
 
-      - name: Build E213
+      - name: Build all targets
         shell: bash
         run: |
-          set -o pipefail
-          pio run -e heltec-ft8-cat -v 2>&1 | tee build-log.txt
+          set +e
+          : > build.log
+
+          echo "===== BUILD E213 =====" | tee -a build.log
+          pio run -e e213 -v 2>&1 | tee -a build.log
+          E213_STATUS=${PIPESTATUS[0]}
+
+          echo "===== BUILD N16R8 =====" | tee -a build.log
+          pio run -e n16r8 -v 2>&1 | tee -a build.log
+          N16R8_STATUS=${PIPESTATUS[0]}
+
+          echo "===== BUILD T114 =====" | tee -a build.log
+pio run -e t114 -v 2>&1 | tee -a build.log
+T114_STATUS=${PIPESTATUS[0]}
+
+          exit $((E213_STATUS + N16R8_STATUS +T114_STATUS))
 
       - name: Collect firmware files
         if: always()
@@ -33,11 +47,16 @@ jobs:
         run: |
           mkdir -p dist
 
-          cp .pio/build/heltec-ft8-cat/bootloader.bin dist/E213-bootloader.bin
-          cp .pio/build/heltec-ft8-cat/partitions.bin dist/E213-partition.bin
-          cp .pio/build/heltec-ft8-cat/firmware.bin dist/E213-firmware.bin
+          cp .pio/build/e213/bootloader.bin  dist/E213-bootloader.bin  2>/dev/null || true
+          cp .pio/build/e213/partitions.bin  dist/E213-partition.bin   2>/dev/null || true
+          cp .pio/build/e213/firmware.bin    dist/E213-firmware.bin    2>/dev/null || true
 
-          cp build-log.txt dist/build.log
+          cp .pio/build/n16r8/bootloader.bin dist/N16R8-bootloader.bin 2>/dev/null || true
+          cp .pio/build/n16r8/partitions.bin dist/N16R8-partition.bin  2>/dev/null || true
+          cp .pio/build/n16r8/firmware.bin   dist/N16R8-firmware.bin   2>/dev/null || true
+          cp .pio/build/t114/firmware.uf2 dist/T114-firmware.uf2 2>/dev/null || true
+
+          cp build.log dist/build.log
 
       - name: Upload firmware package
         if: always()
