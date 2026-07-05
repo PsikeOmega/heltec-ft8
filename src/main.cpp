@@ -28,10 +28,21 @@ void printStartupMessage() {
 void setup() {
     #if defined(HELTEC_T114)
     Serial.begin(115200);
+    delay(1000);
+
+    #if defined(SerialUSB)
+        SerialUSB.begin(115200);
+    #endif
+
     delay(8000);
 
     while (true) {
-        Serial.println("Hello from T114");
+        Serial.println("Hello from T114 via Serial");
+
+        #if defined(SerialUSB)
+            SerialUSB.println("Hello from T114 via SerialUSB");
+        #endif
+
         delay(1000);
     }
     #endif
